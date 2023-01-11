@@ -68,7 +68,7 @@
  * official version. @n See @ref cfsversions for format differences between development and release versions.
  */
 #define MPU6050_VERSION_STRING                       \
-    " Sample Lib DEVELOPMENT BUILD " MPU6050_VERSION \
+    " Sensor MPU6050 DEVELOPMENT BUILD " MPU6050_VERSION \
     ", Last Official Release: v1.1.0" /* For full support please use this version */
 
 #endif /* MPU6050_VERSION_H */

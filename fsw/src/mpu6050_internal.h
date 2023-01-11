@@ -55,17 +55,4 @@ int sensor_mpu6050_get_reg_8(uint8_t register_add, uint8_t **buff);
 int sensor_mpu6050_get_gyro_axis(uint8_t **buff, sensor_mpu6050_axis axis);
 int sensor_mpu6050_get_accel_axis(uint8_t **buff, sensor_mpu6050_axis axis);
 
-float wrap(float angle,float limit);
-void setGyroOffsets(float x, float y, float z);
-void setAccOffsets(float x, float y, float z);
-void setFilterGyroCoef(float gyro_coeff);
-
-void sensor_mpu6050_init_data(void);
-
-int sensor_mpu6050_update_accel(void);
-
-int sensor_mpu6050_update_gyro(void);
-
-int sensor_mpu6050_update_temp(void);
-
 #endif

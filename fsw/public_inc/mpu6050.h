@@ -20,7 +20,6 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
-#include <math.h>
 #include "cfe.h"
 
 // Device address when ADO = 0
@@ -58,10 +57,6 @@
 #define RAD_2_DEG             57.29578 // [deg/rad]
 #define CALIB_OFFSET_NB_MES   500
 
-#define DEFAULT_GYRO_COEFF    0.98
-
-#define runtime_ms()    rtems_clock_get_uptime_nanoseconds()/1000000
-
 typedef enum {
   SENSOR_MPU6050_BEGIN,
   SENSOR_MPU6050_SET_REG
@@ -74,24 +69,15 @@ typedef enum {
 } sensor_mpu6050_axis;
 
 typedef struct {
-  float gyroXoffset, gyroYoffset, gyroZoffset;
-  float accXoffset, accYoffset, accZoffset;
-  float temp, accX, accY, accZ, gyroX, gyroY, gyroZ;
-  float angleAccX, angleAccY;
-  float angleX, angleY, angleZ;
-  unsigned long preInterval;
-  float filterGyroCoef; // complementary filter coefficient to balance gyro vs accelero data to get angle
-  SENSOR_MPU6050_Register register;
-}SENSOR_MPU6050_Priv_Data_t;
+  float accX, accY, accZ;
+  float gyroX, gyroY, gyroZ;
+}SENSOR_MPU6050_Offsets_t;
 
 typedef struct {
-  uint8_t address;
-  uint8_t value;
-}SENSOR_MPU6050_Register;
-
-typedef struct {
-  float temp, accX, accY, accZ, gyroX, gyroY, gyroZ;
-  float angleX, angleY, angleZ;
+  SENSOR_MPU6050_Offsets_t offset;
+  float temp;
+  float accX, accY, accZ;
+  float gyroX, gyroY, gyroZ;
   float angleAccX, angleAccY;
 }SENSOR_MPU6050_Data_t;
 
@@ -104,16 +90,15 @@ typedef struct {
 
 **  \return Execution status
 *************************************************************************/
-int32 SAMPLE_LIB_Init(void);
+int32 MPU6050_Init(void);
 
 int i2c_dev_register_sensor_mpu6050(const char *bus_path, const char *dev_path);
 int sensor_mpu6050_begin(int fd);
-int sensor_mpu6050_set_register(int fd, uint8_t register, uint8_t val);
+int sensor_mpu6050_set_register(int fd, uint8_t reg, uint8_t val);
 
 // Data functions
-SENSOR_MPU6050_Data_t sensor_mpu6050_get_data(void);
-void sensor_mpu6050_read_data(void);
-void sensor_mpu6050_calcOffsets(void);
+float sensor_mpu6050_get_accel(sensor_mpu6050_axis axis, float offset);
+float sensor_mpu6050_get_gyro(sensor_mpu6050_axis axis, float offset);
 float sensor_mpu6050_get_temp(void);
 
 /** @} */
