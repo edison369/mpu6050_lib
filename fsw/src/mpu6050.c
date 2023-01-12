@@ -19,12 +19,10 @@ const char bus_path[] = "/dev/i2c-2";
 *************************************************************************/
 char MPU6050_Buffer[MPU6050_BUFFER_SIZE];
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*                                                                 */
-/* Library Initialization Routine                                  */
-/* cFE requires that a library have an initialization routine      */
-/*                                                                 */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*************************************************************************
+** Private functions
+*************************************************************************/
+
 int32 MPU6050_Init(void)
 {
     /*
@@ -49,10 +47,6 @@ int32 MPU6050_Init(void)
 
     return CFE_SUCCESS;
 }
-
-/*
-* INTERNAL FUNCTIONS
-*/
 
 int read_bytes(int fd, uint16_t i2c_address, uint8_t data_address, uint16_t nr_bytes, uint8_t **buff){
   int rv;
@@ -261,9 +255,9 @@ int sensor_mpu6050_get_accel_axis(uint8_t **buff, sensor_mpu6050_axis axis){
   return err;
 }
 
-/*
-* PUBLIC FUNCTIONS
-*/
+/*************************************************************************
+** Public functions
+*************************************************************************/
 
 int i2c_dev_register_sensor_mpu6050(const char *bus_path, const char *dev_path){
   i2c_dev *dev;
@@ -339,8 +333,7 @@ float sensor_mpu6050_get_temp(void){
 
   free(tmp);
 
-  if(err != 0){
-    printf("There was an error when reading temperature registers...\n");
+  if(err != 0){  // There was an error
     return -1;
   }
 

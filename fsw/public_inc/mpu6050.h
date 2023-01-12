@@ -92,6 +92,10 @@ typedef struct {
 *************************************************************************/
 int32 MPU6050_Init(void);
 
+/*************************************************************************
+** Public Function Prototypes
+*************************************************************************/
+// Control functions
 int i2c_dev_register_sensor_mpu6050(const char *bus_path, const char *dev_path);
 int sensor_mpu6050_begin(int fd);
 int sensor_mpu6050_set_register(int fd, uint8_t reg, uint8_t val);
@@ -100,7 +104,5 @@ int sensor_mpu6050_set_register(int fd, uint8_t reg, uint8_t val);
 float sensor_mpu6050_get_accel(sensor_mpu6050_axis axis, float offset);
 float sensor_mpu6050_get_gyro(sensor_mpu6050_axis axis, float offset);
 float sensor_mpu6050_get_temp(void);
-
-/** @} */
 
 #endif /* _DEV_I2C_SENSOR_MPU6050_H */
