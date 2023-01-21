@@ -150,7 +150,7 @@ int sensor_mpu6050_ioctl(i2c_dev *dev, ioctl_command_t command, void *arg){
 
       // Sensor configuration
       err =       sensor_mpu6050_set_reg_8(dev, PWR_MGT_1, 0x00);               //Temp sensor enabled, internal 8MHz oscillator and cycle disabled
-      err = err + sensor_mpu6050_set_reg_8(dev, SIGNAL_PATH_RESET, 0x03); //Accelerometer, Gyroscope and Thermometer path reset
+      err = err + sensor_mpu6050_set_reg_8(dev, SIGNAL_PATH_RESET, 0x07); //Accelerometer, Gyroscope and Thermometer path reset
       err = err + sensor_mpu6050_set_reg_8(dev, ACCEL_CONFIG, 0x01);      //5Hz filter +-2g
       err = err + sensor_mpu6050_set_reg_8(dev, GYRO_CONFIG, 0x00);       //+-250 deg/s
       err = err + sensor_mpu6050_set_reg_8(dev, INT_ENABLE, 1<<WOM_EN);         //Disables interrupts in MPU6050
